@@ -2,55 +2,47 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Happy Birthday 🎂</title>
+<title>Just For You ✨</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
 
 <style>
-*{box-sizing:border-box;margin:0;padding:0}
+*{margin:0;padding:0;box-sizing:border-box}
 body{
   min-height:100vh;
   font-family:'Poppins',sans-serif;
   display:flex;
   justify-content:center;
   align-items:center;
-  background:linear-gradient(270deg,#ff0080,#7928ca,#2afadf,#ff0080);
-  background-size:800% 800%;
-  animation:bg 12s ease infinite;
+  background:#000;
   color:white;
-  text-align:center;
   overflow:hidden;
 }
-@keyframes bg{
-  0%{background-position:0% 50%}
-  50%{background-position:100% 50%}
-  100%{background-position:0% 50%}
-}
 
+/* Mystery screen */
 .card{
-  background:rgba(255,255,255,0.15);
-  backdrop-filter:blur(18px);
+  background:rgba(255,255,255,0.1);
+  backdrop-filter:blur(15px);
   padding:40px 25px;
   border-radius:25px;
   width:90%;
   max-width:420px;
-  box-shadow:0 20px 40px rgba(0,0,0,.4);
+  text-align:center;
+  box-shadow:0 20px 40px rgba(0,0,0,.6);
 }
 
-h1{
-  font-size:32px;
-  margin-bottom:10px;
-}
+h1{font-size:28px;margin-bottom:10px}
+p{opacity:.85}
 
 input{
   width:100%;
   padding:14px;
+  margin-top:16px;
   border:none;
   border-radius:14px;
-  outline:none;
   font-size:16px;
-  margin-top:15px;
+  outline:none;
 }
 
 button{
@@ -59,81 +51,149 @@ button{
   width:100%;
   border:none;
   border-radius:14px;
-  background:#ff0080;
+  background:#ff004f;
   color:white;
   font-size:16px;
   font-weight:700;
   cursor:pointer;
 }
 
-#wish{
-  margin-top:20px;
-  font-size:20px;
-  font-weight:600;
-  line-height:1.6;
-  min-height:120px;
+/* Countdown */
+#countdown{
+  position:fixed;
+  inset:0;
+  background:black;
+  display:none;
+  justify-content:center;
+  align-items:center;
+  font-size:120px;
+  font-weight:700;
+  z-index:1000;
 }
 
-.balloon{
-  position:absolute;
-  bottom:-150px;
-  width:40px;
-  height:55px;
-  border-radius:50%;
-  animation:float 8s linear infinite;
-  opacity:.9;
+/* Wish */
+#wish{
+  position:fixed;
+  inset:0;
+  display:none;
+  justify-content:center;
+  align-items:center;
+  text-align:center;
+  padding:30px;
+  background:linear-gradient(270deg,#0f2027,#203a43,#2c5364,#0f2027);
+  background-size:800% 800%;
+  animation:bg 12s ease infinite;
 }
-@keyframes float{
-  0%{transform:translateY(0)}
-  100%{transform:translateY(-120vh)}
+
+@keyframes bg{
+  0%{background-position:0% 50%}
+  50%{background-position:100% 50%}
+  100%{background-position:0% 50%}
+}
+
+#wishText{
+  font-size:26px;
+  font-weight:700;
+  line-height:1.6;
+  max-width:600px;
+}
+
+/* Fireworks */
+.firework{
+  position:absolute;
+  width:6px;
+  height:6px;
+  border-radius:50%;
+  animation:explode 1.5s linear infinite;
+}
+
+@keyframes explode{
+  0%{transform:scale(0);opacity:1}
+  100%{transform:scale(6);opacity:0}
 }
 </style>
 </head>
 
 <body>
 
-<div class="card">
-  <h1>🎉 Birthday Surprise 🎉</h1>
-  <p>Enter your name 👇</p>
-  <input type="text" id="name" placeholder="Your Name">
-  <button onclick="startWish()">Show Magic ✨</button>
-  <div id="wish"></div>
+<div class="card" id="startCard">
+  <h1>✨ Something Special ✨</h1>
+  <p>Enter your name and wait...</p>
+  <input id="name" placeholder="Your Name">
+  <button onclick="start()">Continue</button>
 </div>
 
+<div id="countdown"></div>
+
+<div id="wish">
+  <div id="wishText"></div>
+</div>
+
+<audio id="song" autoplay loop>
+  <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3">
+</audio>
+
 <script>
-function startWish(){
-  const name=document.getElementById("name").value.trim();
-  if(!name) return alert("Please enter your name 🎂");
+let userName="";
 
-  document.querySelector("input").style.display="none";
-  document.querySelector("button").style.display="none";
+function start(){
+  userName=document.getElementById("name").value.trim();
+  if(!userName) return alert("Enter your name 🙂");
 
-  const msg = `🎂 Happy Birthday ${name}! 🎉
-May your life be filled with smiles, success, love and endless happiness.
-Today is not just your birthday, it's a celebration of YOU 🌟
-Never stop dreaming, never stop smiling 💖`;
-
-  let i=0;
-  const wishBox=document.getElementById("wish");
-  wishBox.innerHTML="";
-  const typer=setInterval(()=>{
-    wishBox.innerHTML += msg.charAt(i);
-    i++;
-    if(i>=msg.length) clearInterval(typer);
-  },40);
-
-  createBalloons();
+  document.getElementById("startCard").style.display="none";
+  startCountdown();
 }
 
-function createBalloons(){
-  for(let i=0;i<20;i++){
-    const b=document.createElement("div");
-    b.className="balloon";
-    b.style.left=Math.random()*100+"vw";
-    b.style.background=`hsl(${Math.random()*360},80%,60%)`;
-    b.style.animationDuration=(5+Math.random()*5)+"s";
-    document.body.appendChild(b);
-  }
+function startCountdown(){
+  const cd=document.getElementById("countdown");
+  cd.style.display="flex";
+  let n=10;
+  cd.innerText=n;
+
+  const timer=setInterval(()=>{
+    n--;
+    cd.innerText=n;
+    if(n===0){
+      clearInterval(timer);
+      cd.style.display="none";
+      showWish();
+    }
+  },1000);
+}
+
+function showWish(){
+  document.getElementById("song").play();
+  document.getElementById("wish").style.display="flex";
+
+  const text=`🎆 Happy New Year ${userName}! 🎉
+A new year means a new beginning,
+new dreams, new hope and new success 🌟
+May this year change your life beautifully 💖
+Never stop smiling 🥂✨`;
+
+  let i=0;
+  const box=document.getElementById("wishText");
+  const typer=setInterval(()=>{
+    box.innerHTML+=text.charAt(i);
+    i++;
+    if(i>=text.length) clearInterval(typer);
+  },40);
+
+  fireworks();
+}
+
+function fireworks(){
+  setInterval(()=>{
+    for(let i=0;i<8;i++){
+      const f=document.createElement("div");
+      f.className="firework";
+      f.style.left=Math.random()*100+"vw";
+      f.style.top=Math.random()*100+"vh";
+      f.style.background=`hsl(${Math.random()*360},80%,60%)`;
+      document.body.appendChild(f);
+      setTimeout(()=>f.remove(),1500);
+    }
+  },300);
 }
 </script>
 
