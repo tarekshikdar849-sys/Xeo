@@ -2,208 +2,164 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>✨</title>
+<title>✨ Secret New Year 2026 ✨</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
-
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
-body{
-  height:100vh;
-  font-family:'Poppins',sans-serif;
-  background:#000;
-  color:#fff;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  overflow:hidden;
-}
-
-/* screens */
-.screen{
-  position:fixed;
-  inset:0;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  flex-direction:column;
-  text-align:center;
-  padding:30px;
-}
-
-.hidden{display:none}
-
-/* intro */
-#intro h1{font-size:28px}
-#intro p{opacity:.7;margin-top:10px}
-
-/* input */
-input{
-  margin-top:20px;
-  padding:14px;
-  width:260px;
-  border:none;
-  border-radius:14px;
-  font-size:16px;
-  outline:none;
-  text-align:center;
-}
-
-button{
-  margin-top:18px;
-  padding:14px 26px;
-  border:none;
-  border-radius:14px;
-  background:#ff004f;
-  color:white;
-  font-size:16px;
-  font-weight:700;
-  cursor:pointer;
-}
-
-/* loading */
-#loading{
-  font-size:22px;
-  letter-spacing:2px;
-  animation:pulse 1.5s infinite;
-}
-@keyframes pulse{
-  0%,100%{opacity:.4}
-  50%{opacity:1}
-}
-
-/* countdown */
-#countdown{
-  font-size:120px;
-  font-weight:700;
-}
-
-/* wish */
-#wish{
-  background:linear-gradient(270deg,#0f2027,#203a43,#2c5364,#0f2027);
-  background-size:800% 800%;
-  animation:bg 12s ease infinite;
-}
-@keyframes bg{
-  0%{background-position:0% 50%}
-  50%{background-position:100% 50%}
-  100%{background-position:0% 50%}
-}
-#wishText{
-  font-size:26px;
-  font-weight:700;
-  line-height:1.7;
-  max-width:700px;
-}
-
-/* fireworks */
-.fire{
-  position:absolute;
-  width:6px;
-  height:6px;
-  border-radius:50%;
-  animation:boom 1.5s linear infinite;
-}
-@keyframes boom{
-  0%{transform:scale(0);opacity:1}
-  100%{transform:scale(6);opacity:0}
-}
+body,html{height:100%;width:100%;overflow:hidden;font-family:'Poppins',sans-serif;background:#000;color:white;}
+.screen{position:fixed;inset:0;display:flex;justify-content:center;align-items:center;flex-direction:column;text-align:center;padding:20px;transition:all 1s ease;}
+.hidden{display:none;}
+input{padding:14px 20px;border-radius:12px;border:none;margin-top:20px;font-size:16px;text-align:center;outline:none;}
+button{padding:14px 24px;margin-top:20px;border:none;border-radius:14px;background:#ff004f;color:white;font-weight:700;font-size:16px;cursor:pointer;}
+#countdown{font-size:120px;font-weight:700;}
+#wishText,#captionText{font-size:28px;font-weight:700;line-height:1.6;max-width:700px;}
+.firefly{position:absolute;width:6px;height:6px;border-radius:50%;animation:fireflyAnim 5s linear infinite;}
+@keyframes fireflyAnim{0%{transform:translateY(0) translateX(0);}50%{transform:translateY(-200px) translateX(100px);}100%{transform:translateY(0) translateX(0);}}
+.gradientBg{background:linear-gradient(270deg,#0f2027,#203a43,#2c5364,#0f2027);background-size:800% 800%;animation:bgAnim 12s ease infinite;height:100%;width:100%;display:flex;justify-content:center;align-items:center;flex-direction:column;}
+@keyframes bgAnim{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
+.confetti{position:absolute;width:8px;height:12px;animation:fall 4s linear infinite;}
+@keyframes fall{0%{transform:translateY(-10vh) rotate(0deg);}100%{transform:translateY(110vh) rotate(360deg);}}
+.typing{border-right:3px solid #fff;animation:blink .7s infinite;} 
+@keyframes blink{0%,100%{border-color:transparent}50%{border-color:#fff}}
 </style>
 </head>
-
 <body>
 
-<!-- INTRO -->
-<div class="screen" id="intro">
-  <h1>🖤 Trust Me</h1>
-  <p>Just one step…</p>
+<!-- Page 1: Name Input -->
+<div class="screen" id="page1">
+  <h1>🖤 Trust me...</h1>
+  <p>Enter your name to start the surprise</p>
   <input id="name" placeholder="Your Name">
   <button onclick="start()">Continue</button>
 </div>
 
-<!-- LOADING -->
-<div class="screen hidden" id="loading">
-  Preparing something special...
+<!-- Page 2: Countdown -->
+<div class="screen hidden" id="page2">
+  <div id="countdown"></div>
 </div>
 
-<!-- COUNTDOWN -->
-<div class="screen hidden" id="countdown"></div>
-
-<!-- WISH -->
-<div class="screen hidden" id="wish">
+<!-- Page 3: HAPPY NEW YEAR 2026 -->
+<div class="screen hidden gradientBg" id="page3">
   <div id="wishText"></div>
 </div>
 
-<!-- MUSIC -->
+<!-- Page 4: Caption 1 -->
+<div class="screen hidden gradientBg" id="page4">
+  <div id="captionText"></div>
+</div>
+
+<!-- Page 5: Caption 2 -->
+<div class="screen hidden gradientBg" id="page5">
+  <div id="captionText2"></div>
+</div>
+
+<!-- Music -->
 <audio id="music" loop>
-  <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-13.mp3">
+  <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-17.mp3">
 </audio>
 
 <script>
-let user="";
+// Global
+let userName="";
 
 function start(){
-  user=document.getElementById("name").value.trim();
-  if(!user) return alert("Type your name 🙂");
-  intro.classList.add("hidden");
-  loading.classList.remove("hidden");
-
-  setTimeout(()=>{
-    loading.classList.add("hidden");
-    startCountdown();
-  },3000);
+  userName=document.getElementById("name").value.trim();
+  if(!userName) return alert("Please enter your name 🙂");
+  document.getElementById("page1").classList.add("hidden");
+  startCountdown();
 }
 
+// Countdown
 function startCountdown(){
-  countdown.classList.remove("hidden");
+  const page2=document.getElementById("page2");
+  page2.classList.remove("hidden");
   let n=10;
+  const countdown=document.getElementById("countdown");
   countdown.innerText=n;
-
-  const t=setInterval(()=>{
+  const timer=setInterval(()=>{
     n--;
     countdown.innerText=n;
-    if(n===0){
-      clearInterval(t);
-      countdown.classList.add("hidden");
-      reveal();
+    if(n<=0){
+      clearInterval(timer);
+      page2.classList.add("hidden");
+      showWish();
     }
   },1000);
 }
 
-function reveal(){
-  music.play();
-  wish.classList.remove("hidden");
+// Page 3: Wish
+function showWish(){
+  const page3=document.getElementById("page3");
+  page3.classList.remove("hidden");
+  document.getElementById("music").play();
 
-  const msg=`🎆 Happy New Year ${user}! 🎉
+  const wishMsg=`🎆 HAPPY NEW YEAR 2026 ${userName}! 🎉`;
+  typeWriter("wishText",wishMsg,0,()=>{ 
+    spawnFireflies(30); 
+    setTimeout(showCaption1,3000);
+  });
+}
 
-A new chapter begins tonight.
-Leave the pain, take the lessons.
-This year will change you 🌟
+// Page 4: Caption 1
+function showCaption1(){
+  document.getElementById("page3").classList.add("hidden");
+  const page4=document.getElementById("page4");
+  page4.classList.remove("hidden");
+  const msg="🌟 Leave the past, embrace the future ✨";
+  typeWriter("captionText",msg,0,()=>{ spawnConfetti(40); setTimeout(showCaption2,4000); });
+}
 
-Smile more. Dream bigger.
-You deserve happiness 💖`;
+// Page 5: Caption 2
+function showCaption2(){
+  document.getElementById("page4").classList.add("hidden");
+  const page5=document.getElementById("page5");
+  page5.classList.remove("hidden");
+  const msg="💖 May this year bring joy, love and endless success 🌈";
+  typeWriter("captionText2",msg,0,()=>{ spawnFireflies(50); });
+}
 
-  let i=0;
-  const box=document.getElementById("wishText");
-  const typer=setInterval(()=>{
-    box.innerHTML+=msg.charAt(i);
+// Typing Effect
+function typeWriter(id,text,i,callback){
+  const el=document.getElementById(id);
+  el.innerHTML="";
+  const interval=setInterval(()=>{
+    el.innerHTML+=text.charAt(i);
     i++;
-    if(i>=msg.length) clearInterval(typer);
-  },40);
-
-  setInterval(()=>{
-    for(let i=0;i<10;i++){
-      const f=document.createElement("div");
-      f.className="fire";
-      f.style.left=Math.random()*100+"vw";
-      f.style.top=Math.random()*100+"vh";
-      f.style.background=`hsl(${Math.random()*360},80%,60%)`;
-      document.body.appendChild(f);
-      setTimeout(()=>f.remove(),1500);
+    if(i>=text.length){
+      clearInterval(interval);
+      el.classList.remove("typing");
+      if(callback) callback();
     }
-  },300);
+  },40);
+  el.classList.add("typing");
+}
+
+// Fireflies
+function spawnFireflies(num){
+  for(let i=0;i<num;i++){
+    const f=document.createElement("div");
+    f.className="firefly";
+    f.style.left=Math.random()*100+"vw";
+    f.style.top=Math.random()*100+"vh";
+    f.style.background=`hsl(${Math.random()*360},80%,70%)`;
+    document.body.appendChild(f);
+    setTimeout(()=>f.remove(),10000);
+  }
+}
+
+// Confetti
+function spawnConfetti(num){
+  for(let i=0;i<num;i++){
+    const c=document.createElement("div");
+    c.className="confetti";
+    c.style.left=Math.random()*100+"vw";
+    c.style.background=`hsl(${Math.random()*360},80%,60%)`;
+    c.style.animationDuration=(3+Math.random()*3)+"s";
+    document.body.appendChild(c);
+    setTimeout(()=>c.remove(),4000);
+  }
 }
 </script>
-
 </body>
 </html>
