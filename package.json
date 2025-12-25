@@ -1,0 +1,14 @@
+{
+  "name": "transparent-login-form",
+  "version": "1.0.0",
+  "description": "Simple transparent login form using Node.js & Express",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "author": "Tarek Shikdar",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}
