@@ -1,79 +1,139 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Original Heart Art</title>
-    <style>
-        body {
-            background-color: black;
-            margin: 0;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
-            color: white;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-        h1 {
-            font-size: 50px;
-            margin-bottom: 20px;
-            font-weight: bold;
-        }
-        canvas {
-            /* ছবির সেই ফ্রেমের মতো লুক */
-            border: 2px solid #222;
-        }
-    </style>
+<meta charset="UTF-8">
+<title>Glass Calculator 🧊</title>
+
+<style>
+body{
+  margin:0;
+  height:100vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  background: linear-gradient(135deg,#667eea,#764ba2);
+  font-family: 'Segoe UI', sans-serif;
+}
+
+.calculator{
+  width:280px;
+  padding:20px;
+  border-radius:20px;
+  background: rgba(255,255,255,0.15);
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+  box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+  color:#fff;
+}
+
+.calculator h2{
+  text-align:center;
+  margin-bottom:10px;
+}
+
+#display{
+  width:100%;
+  height:45px;
+  font-size:20px;
+  text-align:right;
+  border:none;
+  border-radius:10px;
+  margin-bottom:12px;
+  padding:5px 10px;
+  background: rgba(255,255,255,0.25);
+  color:#fff;
+  outline:none;
+}
+
+button{
+  width:55px;
+  height:45px;
+  margin:4px;
+  border:none;
+  border-radius:10px;
+  font-size:18px;
+  cursor:pointer;
+  background: rgba(255,255,255,0.25);
+  color:#fff;
+  backdrop-filter: blur(5px);
+  transition:0.2s;
+}
+
+button:hover{
+  background: rgba(255,255,255,0.4);
+  transform: scale(1.05);
+}
+
+.fun{
+  margin-top:10px;
+  font-size:14px;
+  text-align:center;
+  min-height:20px;
+}
+</style>
 </head>
+
 <body>
 
-    <h1>CONGRATS! 🎉</h1>
-    <canvas id="heartCanvas"></canvas>
+<div class="calculator">
+  <h2>Glass Calculator 🧊</h2>
+  <input id="display" disabled>
 
-    <script>
-        const canvas = document.getElementById('heartCanvas');
-        const ctx = canvas.getContext('2d');
+  <div>
+    <button onclick="add('7')">7</button>
+    <button onclick="add('8')">8</button>
+    <button onclick="add('9')">9</button>
+    <button onclick="add('/')">÷</button>
+  </div>
+  <div>
+    <button onclick="add('4')">4</button>
+    <button onclick="add('5')">5</button>
+    <button onclick="add('6')">6</button>
+    <button onclick="add('*')">×</button>
+  </div>
+  <div>
+    <button onclick="add('1')">1</button>
+    <button onclick="add('2')">2</button>
+    <button onclick="add('3')">3</button>
+    <button onclick="add('-')">−</button>
+  </div>
+  <div>
+    <button onclick="add('0')">0</button>
+    <button onclick="clearAll()">C</button>
+    <button onclick="calc()">=</button>
+    <button onclick="add('+')">+</button>
+  </div>
 
-        // ক্যানভাস সাইজ
-        canvas.width = 600;
-        canvas.height = 600;
+  <div class="fun" id="funText"></div>
+</div>
 
-        const centerX = canvas.width / 2;
-        const centerY = canvas.height / 2 - 30; // একটু উপরে সেট করা
-        let t = 0;
+<script>
+const jokes = [
+  "এইটা তো খুব easy 😎",
+  "ভাই এত হিসাব কেন? 😂",
+  "Calculator না crush মনে কর 😌",
+  "ঠিকই করছো 🔥",
+  "ভুল হলে দোষ আমার না 😜"
+];
 
-        function drawHeart() {
-            // হার্টের গাণিতিক সূত্র (Parametric Equation)
-            const x = 16 * Math.pow(Math.sin(t), 3);
-            const y = -(13 * Math.cos(t) - 5 * Math.cos(2 * t) - 2 * Math.cos(3 * t) - Math.cos(4 * t));
+function add(val){
+  display.value += val;
+}
 
-            // স্কেলিং (ছবির মতো বড় দেখানোর জন্য)
-            const scale = 15;
-            const targetX = centerX + x * scale;
-            const targetY = centerY + y * scale;
+function clearAll(){
+  display.value = "";
+  funText.innerText = "সব clean 🧼";
+}
 
-            // ছবির মতো লাইন আর্ট তৈরি
-            ctx.beginPath();
-            ctx.strokeStyle = "rgba(255, 0, 0, 0.6)"; // লাল রঙের লাইন
-            ctx.lineWidth = 1;
-            ctx.moveTo(centerX, centerY); // সেন্টার থেকে শুরু
-            ctx.lineTo(targetX, targetY); // হার্টের বাউন্ডারিতে শেষ
-            ctx.stroke();
+function calc(){
+  try{
+    display.value = eval(display.value);
+    funText.innerText = jokes[Math.floor(Math.random()*jokes.length)];
+  }catch{
+    funText.innerText = "এইটা আবার কি দিলা 🤯";
+  }
+}
+</script>
 
-            // ধীরে ধীরে ড্র করার জন্য
-            t += 0.02; 
-
-            if (t <= 2 * Math.PI) {
-                requestAnimationFrame(drawHeart);
-            }
-        }
-
-        // শুরুতে পুরো ক্যানভাস কালো করে দেওয়া
-        ctx.fillStyle = "black";
-        ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-        drawHeart();
-    </script>
 </body>
 </html>
