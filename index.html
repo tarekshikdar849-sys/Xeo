@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Glass Calculator 🧊</title>
+<title>Glass Funny Calculator 🧊</title>
 
 <style>
 body{
@@ -16,59 +16,54 @@ body{
 }
 
 .calculator{
-  width:280px;
+  width:290px;
   padding:20px;
-  border-radius:20px;
-  background: rgba(255,255,255,0.15);
-  backdrop-filter: blur(15px);
-  -webkit-backdrop-filter: blur(15px);
-  box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+  border-radius:22px;
+  background: rgba(255,255,255,0.18);
+  backdrop-filter: blur(18px);
+  box-shadow: 0 8px 32px rgba(0,0,0,0.35);
   color:#fff;
 }
 
 .calculator h2{
   text-align:center;
-  margin-bottom:10px;
+  margin-bottom:12px;
+  font-weight:900;
+  letter-spacing:1px;
 }
 
 #display{
   width:100%;
-  height:45px;
-  font-size:20px;
-  text-align:right;
+  height:50px;
+  font-size:18px;
+  font-weight:900;
+  text-align:center;
   border:none;
-  border-radius:10px;
-  margin-bottom:12px;
+  border-radius:12px;
+  margin-bottom:14px;
   padding:5px 10px;
-  background: rgba(255,255,255,0.25);
+  background: rgba(255,255,255,0.35);
   color:#fff;
   outline:none;
 }
 
 button{
-  width:55px;
-  height:45px;
+  width:58px;
+  height:48px;
   margin:4px;
   border:none;
-  border-radius:10px;
+  border-radius:12px;
   font-size:18px;
+  font-weight:900;
   cursor:pointer;
-  background: rgba(255,255,255,0.25);
+  background: rgba(255,255,255,0.3);
   color:#fff;
-  backdrop-filter: blur(5px);
   transition:0.2s;
 }
 
 button:hover{
-  background: rgba(255,255,255,0.4);
-  transform: scale(1.05);
-}
-
-.fun{
-  margin-top:10px;
-  font-size:14px;
-  text-align:center;
-  min-height:20px;
+  background: rgba(255,255,255,0.5);
+  transform: scale(1.08);
 }
 </style>
 </head>
@@ -76,8 +71,8 @@ button:hover{
 <body>
 
 <div class="calculator">
-  <h2>Glass Calculator 🧊</h2>
-  <input id="display" disabled>
+  <h2>Glass Calc 🧊</h2>
+  <input id="display" value="Press = for magic ✨" disabled>
 
   <div>
     <button onclick="add('7')">7</button>
@@ -103,34 +98,39 @@ button:hover{
     <button onclick="calc()">=</button>
     <button onclick="add('+')">+</button>
   </div>
-
-  <div class="fun" id="funText"></div>
 </div>
 
 <script>
-const jokes = [
-  "এইটা তো খুব easy 😎",
-  "ভাই এত হিসাব কেন? 😂",
-  "Calculator না crush মনে কর 😌",
-  "ঠিকই করছো 🔥",
-  "ভুল হলে দোষ আমার না 😜"
+let exp = "";
+
+const texts = [
+  "Big Brain Mode 🧠🔥",
+  "Math is scary 😵",
+  "Calculator feeling proud 😎",
+  "NASA level calculation 🚀",
+  "Einstein vibes ✨",
+  "Result hidden for fun 😜"
 ];
 
 function add(val){
-  display.value += val;
+  exp += val;
+  display.value = "Typing... ⌨️";
 }
 
 function clearAll(){
-  display.value = "";
-  funText.innerText = "সব clean 🧼";
+  exp = "";
+  display.value = "All cleared 🧼";
 }
 
 function calc(){
   try{
-    display.value = eval(display.value);
-    funText.innerText = jokes[Math.floor(Math.random()*jokes.length)];
+    const result = eval(exp);
+    console.log("Actual Result =", result); // result console এ
+    display.value = texts[Math.floor(Math.random()*texts.length)];
+    exp = "";
   }catch{
-    funText.innerText = "এইটা আবার কি দিলা 🤯";
+    display.value = "Invalid magic spell ❌";
+    exp = "";
   }
 }
 </script>
