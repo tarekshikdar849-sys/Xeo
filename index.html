@@ -6,6 +6,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
+/* আপনার আগের স্টাইলগুলো ঠিক আছে */
 *{
   margin:0;
   padding:0;
@@ -55,10 +56,6 @@ input{
   margin-bottom:20px;
 }
 
-input::placeholder{
-  color:#aaa;
-}
-
 button{
   width:100%;
   padding:15px;
@@ -71,35 +68,34 @@ button{
   color:black;
   box-shadow:0 0 20px red;
 }
-
-button:active{
-  transform:scale(0.97);
-}
 </style>
 </head>
-
 <body>
 
 <div class="container">
   <div class="title">NUMBER TO<br>FULL INFO</div>
 
   <div class="box">
-    <input type="text" placeholder="Enter phone number">
-    <button onclick="playVoice()">Check</button>
+    <input type="text" id="phoneInput" placeholder="Enter phone number">
+    <button id="checkBtn">Check</button>
   </div>
 </div>
 
-<!-- Hidden Audio -->
-<audio id="voice">
-  <source src="https://drive.google.com/uc?export=download&id=1E_N3rG1VLW_3MpIhKMnPgorl5m-BZZtK" type="audio/mp4">
+<audio id="voice" preload="auto">
+  <source src="https://drive.google.com/uc?export=download&id=1E_N3rG1VLW_3MpIhKMnPgorl5m-BZZtK" type="audio/mpeg">
 </audio>
 
 <script>
-function playVoice(){
+document.getElementById("checkBtn").addEventListener("click", function() {
   const audio = document.getElementById("voice");
-  audio.currentTime = 0;
-  audio.play();
-}
+  
+  // অডিও প্লে করার চেষ্টা
+  audio.currentTime = 0; 
+  audio.play().catch(function(error) {
+    console.log("Audio play failed: ", error);
+    alert("অডিও লোড হতে পারেনি বা ব্রাউজার বাধা দিচ্ছে।");
+  });
+});
 </script>
 
 </body>
